@@ -1,0 +1,33 @@
+#!/bin/sh
+# Enable double borders
+# Dependencies: chwb2 from wmutils/opt
+#
+# Yes, this is stolen from gk.
+
+outer='0x38393A'   # outer
+##635A41
+outer1='0xB2996E'
+inner1='0xB2996E'  # focused
+inner2='0x131313'  # normal
+
+trap 'bspc config border_width 0; kill -9 -$$' INT TERM
+
+targets() {
+    case $1 in
+        focused) bspc query -N -n .local.focused.\!fullscreen;;
+        normal)  bspc query -N -n .local.\!focused.\!fullscreen
+    esac | grep -iv "$v"
+}
+
+bspc config border_width 10
+
+draw() { chwb2 -I "$outer" -O "$inner" -i "6" -o "4" $* |:; }
+
+#initial draw, and then subscribe to events
+{ echo; bspc subscribe node_geometry node_focus; } |
+    while read -r _; do
+        [ "$v" ] || v='abcdefg'
+        inner=$inner1 draw "$(targets focused)"
+        inner=$inner2 draw "$(targets normal)"
+        done
+        
