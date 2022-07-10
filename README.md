@@ -2,7 +2,7 @@
 
 <h2 align="center"> ━━━━━━  ❖  ━━━━━━ </h2>
 
-<img src="ronin.png" alt="Rice Showcase" align="center">
+<img src="rice.png" alt="Rice Showcase" align="center">
 
 ## <samp>📜 INFORMATION</samp>
 
